@@ -23,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
 
         computerVsComputerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startDuel(v, DuelType.COMPUTER_VS_COMPUTER);
+                startDuel(DuelType.COMPUTER_VS_COMPUTER);
             }
         });
 
         playerVsComputerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startDuel(v, DuelType.PLAYER_VS_COMPUTER);
+                startDuel(DuelType.PLAYER_VS_COMPUTER);
             }
         });
 
@@ -52,11 +52,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void startDuel(View view, DuelType duelType) {
-        Intent intent = new Intent(this, DuelActivity.class);
-        intent.putExtra("isSpecialMode", isSpecialMode);
-        intent.putExtra("duelType", duelType);
-        startActivity(intent);
+    public void startDuel(DuelType duelType) {
+        if(duelType == DuelType.PLAYER_VS_COMPUTER) {
+            Intent intent = new Intent(this, DuelActivity.class);
+            intent.putExtra("isSpecialMode", isSpecialMode);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(this, DuelActivityComputerVsComputer.class);
+            intent.putExtra("isSpecialMode", isSpecialMode);
+            startActivity(intent);
+        }
     }
 
 

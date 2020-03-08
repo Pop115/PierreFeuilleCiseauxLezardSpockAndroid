@@ -19,5 +19,6 @@
     <string name="tie">Egalité</string>
     <string name="next_game">Partie suivante</string>
     <string name="title_activity_results">ResultsActivity</string>
+    <string name="computer_thinking">ordinateur_reflechit</string>
 
 </resources>

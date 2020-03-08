@@ -1,10 +1,13 @@
 package com.bachwakienan.pierrefeuilleciseauxjava;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +29,8 @@ public class ResultsActivity extends AppCompatActivity {
     int score0;
     int score1;
 
+    Button buttonNextGame;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,13 @@ public class ResultsActivity extends AppCompatActivity {
         textView1 = findViewById(R.id.textView1);
         textViewScore0 = findViewById(R.id.score0);
         textViewScore1 = findViewById(R.id.score1);
+        buttonNextGame = findViewById(R.id.buttonNextGame);
+
+        buttonNextGame.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //Récupération des paramètres envoyés
         if (savedInstanceState == null) {
@@ -45,15 +57,21 @@ public class ResultsActivity extends AppCompatActivity {
                 shape0 = Shape.SCISSORS;
                 shape1 = Shape.SCISSORS;
                 hasShape0Won = 0;
+                score0 = 0;
+                score1 = 0;
             } else {
                 shape0 = (Shape) extras.getSerializable("shape0");
                 shape1 = (Shape) extras.getSerializable("shape1");
+                score0 = extras.getInt("score0");
+                score1 = extras.getInt("score1");
                 hasShape0Won = extras.getInt("hasShape0Won");
             }
         } else {
             shape0 = (Shape) savedInstanceState.getSerializable("shape0");
             shape1 = (Shape) savedInstanceState.getSerializable("shape1");
             hasShape0Won = savedInstanceState.getInt("hasShape0Won");
+            score0 = savedInstanceState.getInt("score0");
+            score1 = savedInstanceState.getInt("score1");
         }
 
 
@@ -102,6 +120,17 @@ public class ResultsActivity extends AppCompatActivity {
                 return getDrawable(R.drawable.spock);
         }
         return null;
+    }
+
+    public void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent setIntent = new Intent(this, MainActivity.class);
+        startActivity(setIntent);
     }
 
 }

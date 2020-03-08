@@ -19,7 +19,6 @@ public class DuelActivity extends AppCompatActivity {
 
     private Drawable defaultBackground;
 
-    private DuelType duelType;
     private boolean isSpecialMode;
 
     private int score0 = 0;
@@ -96,14 +95,11 @@ public class DuelActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
-                duelType = DuelType.COMPUTER_VS_COMPUTER;
                 isSpecialMode = false;
             } else {
-                duelType = (DuelType) extras.getSerializable("duelType");
                 isSpecialMode = extras.getBoolean("isSpecialMode");
             }
         } else {
-            duelType = (DuelType) savedInstanceState.getSerializable("duelType");
             isSpecialMode = savedInstanceState.getBoolean("isSpecialMode");
         }
 
@@ -117,6 +113,7 @@ public class DuelActivity extends AppCompatActivity {
         }
 
         computerPlayer0 = new ComputerPlayer();
+        updateResultDisplay();
     }
 
 
@@ -136,53 +133,16 @@ public class DuelActivity extends AppCompatActivity {
         selectedShape = shape;
     }
 
-    /**
-     * Check if shape 0 is winner
-     *
-     * @param shape0 shape of the first player
-     * @param shape1 shape of the second player
-     * @return -1 if shape 0 loses, 0 if tie, 1 if shape 0 wins
-     */
-    int hasShape0Won(Shape shape0, Shape shape1) {
-
-        if (shape0 == shape1) {
-            return 0;
-        } else if (shape0 == Shape.SCISSORS) {
-            if (shape1 == Shape.PAPER || shape1 == Shape.LIZARD)
-                return 1;
-
-        } else if (shape0 == Shape.PAPER) {
-            if (shape1 == Shape.ROCK || shape1 == Shape.SPOCK)
-                return 1;
-
-        } else if (shape0 == Shape.ROCK) {
-            if (shape1 == Shape.LIZARD || shape1 == Shape.SCISSORS)
-                return 1;
-
-        } else if (shape0 == Shape.LIZARD) {
-            if (shape1 == Shape.SPOCK || shape1 == Shape.PAPER)
-                return 1;
-
-        } else if (shape0 == Shape.SPOCK) {
-            if (shape1 == Shape.SCISSORS || shape1 == Shape.ROCK)
-                return 1;
-        }
-
-        return -1;
-
-    }
-
     void play() {
 
         int hasShape0Won;
-        if (duelType == DuelType.PLAYER_VS_COMPUTER) {
             Shape computerShape;
             if (isSpecialMode)
                 computerShape = computerPlayer0.chooseShapeSpecial();
             else
                 computerShape = computerPlayer0.chooseShape();
 
-            hasShape0Won = hasShape0Won(selectedShape, computerShape);
+            hasShape0Won = DuelHelper.hasShape0Won(selectedShape, computerShape);
 
             if(hasShape0Won == 1)
                 score0++;
@@ -192,14 +152,7 @@ public class DuelActivity extends AppCompatActivity {
             updateResultDisplay();
 
             showResults(selectedShape, computerShape, hasShape0Won);
-        }
-        /*else if (duelType == DuelType.COMPUTER_VS_COMPUTER) {
-            Shape computer0Shape = computerPlayer0.chooseShape();
-            Shape computer1Shape = computerPlayer1.chooseShape();
-            hasShape0Won = hasShape0Won(computer0Shape, computer1Shape);
-            showResults(computer0Shape, computer1Shape, hasShape0Won);
-        }
-            */
+
     }
 
     void updateResultDisplay() {
@@ -214,6 +167,9 @@ public class DuelActivity extends AppCompatActivity {
         intent.putExtra("shape0", shape0);
         intent.putExtra("shape1", shape1);
         intent.putExtra("hasShape0Won", hasShape0Won);
+        intent.putExtra("score0", score0);
+        intent.putExtra("score1", score1);
+        intent.putExtra("duelType", DuelType.PLAYER_VS_COMPUTER);
         startActivity(intent);
         this.overridePendingTransition(0, 0);
     }
