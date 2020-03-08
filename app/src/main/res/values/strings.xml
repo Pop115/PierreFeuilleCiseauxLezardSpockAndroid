@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">PierreFeuilleCiseauxJava</string>
+    <string name="special_mode_activated">Mode spécial activé</string>
+    <string name="special_mode_disabled">Mode spécial désactivé</string>
+    <string name="computer_vs_computer">Ordinateur vs Ordinateur</string>
+    <string name="player_vs_computer">Joueur vs Ordinateur</string>
+    <string name="rock_paper_scissors">Pierre feuille ciseaux</string>
+    <string name="lizard_spock">Lézard spock</string>
+    <string name="scissors">ciseaux</string>
+    <string name="paper">feuille</string>
+    <string name="rock">pierre</string>
+    <string name="lizard">lezard</string>
+    <string name="spock">spock</string>
+    <string name="play">Jouer</string>
+    <string name="score">Score: </string>
+    <string name="shape_played">Shape played</string>
+    <string name="victory">Victoire!</string>
+    <string name="defeat">Défaite…</string>
+    <string name="tie">Egalité</string>
+    <string name="next_game">Partie suivante</string>
+    <string name="title_activity_results">ResultsActivity</string>
+
+</resources>
